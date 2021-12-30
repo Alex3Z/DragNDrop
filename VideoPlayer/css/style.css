@@ -1,0 +1,42 @@
+#player{
+
+width: 720px;
+margin: 20px auto;
+
+}
+#media{
+    width: 720px;
+    border: black 1px solid;   
+    
+}
+nav{
+
+    border: rgb(233, 46, 46) 2px dotted;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: grey;
+    opacity: 0.5;
+    transition: 0.7s;
+}
+nav:hover{opacity: 1;}
+#bar{
+    border: white 1px solid;
+    width: 400px;
+    height: 7px;
+    padding: 2px;
+    border-radius: 5px;
+}
+#progress{
+width: 0;
+height: 7px;
+background-color: white;
+
+}
+#play, #mute{
+width: 65px;
+border-radius: 10px;
+width: fit-content;
+}

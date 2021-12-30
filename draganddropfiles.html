@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<style>
+#dropbox {
+width: 600px;
+height: 300px;
+display: flex;
+justify-content: center;
+align-items: center;
+border: black 1px solid;
+}
+
+</style>
+
+    <section id="dropbox">
+        Перетащите файлы сюда
+        </section>
+
+<script>
+
+let drop;
+function initiate(){
+drop =document.getElementById('dropbox');
+drop.addEventListener('dragenter',function(e){ e.preventDefault(); });
+drop.addEventListener('dragover',function(e){ e.preventDefault(); });
+drop.addEventListener('drop', dropped);
+}
+function dropped(e){
+e.preventDefault();
+let files = e.dataTransfer.files;
+let list = '';
+for(let f = 0; f < files.length; f++){
+    
+    
+  list+=`<img src="images/${files[f].name}">`;
+  list += 'Вы загрузили файл: ' +files[f].name + '<br>';
+   
+}
+console.log(files);
+drop.innerHTML = list;
+}
+addEventListener('load', initiate);
+
+
+
+</script>
+
+
+
+</body>
+</html>
