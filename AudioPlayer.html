@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <style>
+#player{
+
+width: 720px;
+margin: 20px auto;
+
+}
+#media{
+    width: 720px;   
+   }
+nav{
+    border: rgb(233, 46, 46) 2px dotted;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: grey;
+    opacity: 0.5;
+    transition: 0.7s;
+}
+nav:hover{opacity: 1;}
+#bar{
+    border: white 1px solid;
+    width: 400px;
+    height: 7px;
+    padding: 2px;
+    border-radius: 5px;
+}
+#progress{
+width: 0;
+height: 7px;
+background-color: white;
+
+}
+#play, #mute{
+width: 65px;
+border-radius: 10px;
+width: fit-content;
+}
+#dropbox {
+width: 600px;
+height: 300px;
+display: flex;
+justify-content: center;
+align-items: center;
+border: black 1px solid;
+text-align: start;
+}
+  </style>
+
+<section id="player">
+        <audio id="media">
+            <source src="D:\Belhard frontend 47\Video/media/atb.mp3">
+        </audio>   
+        
+        <nav>
+        <div id="buttons">
+            <input type="button" id="play" value="Play">
+            <input type="button" id="mute" value="Mute">
+        </div>
+        <div id="bar">
+        <div id="progress"></div>
+        
+        </div>
+        <div id="control">
+            <input type="range" id="volume" min="0" max="1" step="0.1">
+        </div>
+        
+        </nav>
+        
+        
+        </section>
+        <section id="dropbox">
+            Плейлист(Перетащите файлы сюда)
+            </section>
+<script>
+    function init(){
+     MAX=400;
+
+media=document.getElementById("media");
+play=document.getElementById("play");
+mute=document.getElementById("mute");
+bar=document.getElementById("bar");
+progress=document.getElementById("progress");
+volume=document.getElementById("volume");
+
+play.addEventListener("click", push)
+media.addEventListener("click", push)
+
+mute.addEventListener("click", sound)
+
+bar.addEventListener("click", move)
+volume.addEventListener("change", level)
+}
+addEventListener("load", init);
+
+function level(){
+media.volume=volume.value;
+
+
+}
+
+function push(){
+if (!media.paused && !media.ended){
+media.pause(); 
+play.value="Play";
+clearInterval(loop);
+}else { 
+media.play();
+play.value="Pause";
+loop=setInterval(playStatus,100)                                      
+
+}
+};
+
+function move(e){
+   // e= Event;
+   let mousX=e.pageX-bar.offsetLeft;                 
+   let newTime=mousX*media.duration/MAX;
+
+   progress.style.width= `${mousX}px`;  
+   media.currentTime=newTime;
+}
+
+
+
+function playStatus(){
+    
+if (!media.ended){
+let size=media.currentTime*MAX/media.duration;
+progress.style.width=`${parseInt(size)}px`;
+}else {
+    progress.style.width= "0";  
+    play.value="Play";
+    clearInterval(loop);
+    currentTime=0.1;
+}
+}
+
+function sound(){
+
+if (media.muted){
+media.muted=false;
+mute.value="Mute";
+mute.style.background="white";
+}
+else {
+    media.muted=true;
+mute.value="unmute";
+mute.style.background="salmon";
+}
+
+};
+let drop;
+function initiate(){
+drop =document.getElementById('dropbox');
+drop.addEventListener('dragenter',function(e){ e.preventDefault(); });
+drop.addEventListener('dragover',function(e){ e.preventDefault(); });
+drop.addEventListener('drop', dropped);
+}
+function dropped(e){
+e.preventDefault();
+let files = e.dataTransfer.files;
+let list = '';
+for(let f = 0; f < files.length; f++){
+    
+    
+  list+=files[f];
+
+  list += 'Вы загрузили файл: ' +files[f].name + '<br>';
+}
+   
+
+console.log(files);
+drop.innerHTML = list;
+}
+addEventListener('load', initiate);
+</script>
+
+
+
+
+
+</body>
+</html>
